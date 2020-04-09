@@ -78,7 +78,7 @@ public class BSTIterative {
         }    
 
       /* Case 2: node to be deleted has two children */
-      if(curr.left != null || curr.right != null){
+      if(curr.left != null && curr.right != null){
             Node successor = findMin(curr.right);
             delete(curr.right, successor.data);
             curr.data = successor.data;
