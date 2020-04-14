@@ -40,24 +40,46 @@ public class Graph {
 
     public void dfsWithoutRecursion(int start) {
        Stack<Integer> stack = new Stack<Integer>();
-       boolean[] isVivited = new boolean[adjVertices.size()];
+       Set<Integer> seen = new HashSet<Integer>(adjVertices.size());
        stack.push(start);
        while(!stack.isEmpty()){
            int current = stack.pop();
-           isVivited[current] = true;
-           visit(current);
+           if(!seen.contains(current)){
+               seen.add(current);
+               visit(current);
+           }
            for(int dest: adjVertices.get(current)){
-                if(!isVivited[dest])
+                if(!seen.contains(dest))
                     stack.push(dest);
            }
        }
     }
 
-    private void dfsRecursive(int current, boolean[] isVisited) {
-        isVisited[current] = true;
+    public void bfsWithoutRecursion(int start) {
+        Queue<Integer> queue = new LinkedList<Integer>();
+        Set<Integer> seen = new HashSet<Integer>(adjVertices.size());
+        queue.add(start);
+        while(!queue.isEmpty()){
+            int current = queue.poll();
+            if(!seen.contains(current)){
+                seen.add(current);
+                visit(current);
+            }
+            for(int dest: adjVertices.get(current)){
+                 if(!seen.contains(dest))
+                 queue.add(dest);
+            }
+        }
+     }
+ 
+
+
+
+    private void dfsRecursive(int current, Set<Integer> isVisited) {
+        isVisited.add(current);
         visit(current);
         for (int dest : adjVertices.get(current)) {
-            if (!isVisited[dest])
+            if (!isVisited.contains(dest))
                 dfsRecursive(dest, isVisited);
         }
     }
@@ -90,6 +112,8 @@ public class Graph {
         System.out.println("DFS Iterative:");
         g.dfsWithoutRecursion(0);
         System.out.println("DFS Recursive:");
-        g.dfsRecursive(0, new boolean[g.getVertexCount()]);
+        g.dfsRecursive(0, new HashSet<>(g.getVertexCount()));
+        System.out.println("BFS Iterative:");
+        g.bfsWithoutRecursion(0);
     }
 }
