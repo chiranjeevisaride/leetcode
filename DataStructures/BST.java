@@ -9,7 +9,7 @@ class Node {
     }
 }
 
-public class BSTIterative {
+public class BST {
     public static void main(String[]  args){
         Node root = null;
         int[] keys = {15, 10, 20, 8, 12, 6};
@@ -94,7 +94,6 @@ public class BSTIterative {
           } else 
               root = child;
       } 
-
         return root;
     }
 
