@@ -1,3 +1,12 @@
+/*
+
+Please start my github https://github.com/chiranjeevisaride/leetcode/blob/master/62. Unique Paths.java
+To think DP problems in easy way,
+Step1 : find recursive solution
+Step2: convert recursion to DP either Bottom Up or Top Down
+
+*/
+
 // Recursion 
 // time - O(n2), space - O(n2)
 class Solution {
