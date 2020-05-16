@@ -13,7 +13,8 @@
  *     }
  * }
  */
-// ** Pattern - inorder traversal is ascending order when it matches K return it
+// Pattern - inorder traversal is ascending order when node at n matches k return it 
+// inorder recursion - O(n) Space - O(1)
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         int[] nums = new int[2];
@@ -30,3 +31,32 @@ class Solution {
     }
 }
 
+
+// inorder iteration - O(n) Space - O(1)
+// memory most efficient 
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        return  inorder(root, k);
+    }
+    
+    
+    public int inorder(TreeNode root, int k) {
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode current = root;
+        int[] nums = new int[2];
+        while(current != null || !stack.isEmpty()){
+            while(current != null){
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack.pop();
+            if(++nums[0] == k) {
+                nums[1] = current.val;
+                break;
+            }
+           
+            current = current.right;
+        }
+        return nums[1];
+    }
+}
