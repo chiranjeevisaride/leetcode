@@ -1,5 +1,5 @@
 import java.util.*;
-
+// Time - O(nlogn)  logn to cal sum if digits, Space - O(n)
 class Main {
   public static void main(String[] args) {
     Main m = new Main();
