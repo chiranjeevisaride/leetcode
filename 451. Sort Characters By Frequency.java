@@ -2,19 +2,19 @@ class Solution {
     public String frequencySort(String s) {
         if(s == null ||  s.length() == 0) return s;
         StringBuilder sortedString = new StringBuilder();
-        HashMap<Character, Integer> counter = new HashMap<Character, Integer>();
+        HashMap<Character, Integer> charCounter = new HashMap<Character, Integer>();
         for(char c : s.toCharArray())
-                counter.put(c, counter.getOrDefault(c, 0) + 1);
+                charCounter.put(c, charCounter.getOrDefault(c, 0) + 1);
             
         PriorityQueue<Character> maxHeap = new PriorityQueue<>
-            ((a, b) -> counter.get(b) - counter.get(a));
+            ((a, b) -> charCounter.get(b) - charCounter.get(a));
         
-         for(Character c : counter.keySet())
+         for(Character c : charCounter.keySet())
              maxHeap.offer(c);
              
          while(!maxHeap.isEmpty()){
              Character c = maxHeap.poll();
-             int charCount = counter.get(c);
+             int charCount = charCounter.get(c);
              while(charCount -- > 0)
                 sortedString.append(c);
          }
