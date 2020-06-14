@@ -21,7 +21,7 @@ class Solution {
   }
 
 
-  // Approach 2: Backtracking  Time & Space O(N*2^N)
+  // Approach 2 a: Backtracking  Time & Space O(N*2^N)
   class Solution {
     public List<List<Integer>> subsets(int[] nums) {
          List<List<Integer>> subsets = new ArrayList<>();
@@ -40,4 +40,25 @@ class Solution {
     }
 }
 
-// Approach 3: 
+
+// Approach 2b: Backtracking (variation) Time & Space O(N*2^N)
+
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> output = new ArrayList<>();
+        generateSubsets(0, nums, new ArrayList<Integer>(), output);
+        return output;
+    }
+    
+    public void generateSubsets(int index, int[] nums, List<Integer> current, List<List<Integer>> output) {
+         if(index == nums.length) {
+             output.add(new ArrayList<Integer>(current));
+         }
+         else {
+            current.add(nums[index]);
+            generateSubsets(index + 1, nums, current, output);
+            current.remove(current.size() - 1);
+            generateSubsets(index + 1, nums, current, output);
+         }
+    }
+}
