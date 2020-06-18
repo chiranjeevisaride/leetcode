@@ -1,9 +1,9 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
        
-        List<List<Integer>> graph = new ArrayList<List<Integer>>(numCourses);
+        Map<Integer, List<Integer>> graph = new HashMap<>(numCourses);
         Integer[] vertices = new Integer[numCourses];
-        
+         
         // initialize all vertices as -1 unvisited
         Arrays.fill(vertices, -1);
         /*
@@ -12,11 +12,10 @@ class Solution {
            1 - visited 
         */
         
-        for(int i = 0; i < numCourses; i++)
-            graph.add(i, new ArrayList<>());
-        
         for(int[] prerequisite: prerequisites) {
-           graph.get(prerequisite[1]).add(prerequisite[0]);
+            List<Integer> neighbours = graph.getOrDefault(prerequisite[1], new ArrayList<>());
+            neighbours.add(prerequisite[0]);
+            graph.put(prerequisite[1], neighbours);
         }
         
         for(int i = 0; i < numCourses; i++) {
@@ -30,19 +29,20 @@ class Solution {
     }
     
     
-    public boolean finishPrerequisite(Integer[] vertices, List<List<Integer>> graph, int i) {
+    public boolean finishPrerequisite(Integer[] vertices, Map<Integer, List<Integer>> 
+                                      graph, int i) {
         if(vertices[i] == 1) return true; // already visited backtrack
         if(vertices[i] == 0) return false; // found loop backtrack
         vertices[i] = 0;
         
-        if(graph.get(i).size() == 0) {
+        List<Integer> neighbours = graph.get(i);
+        if(neighbours == null) {
             vertices[i] = 1;
             return true;
         }
         
-        for(int childIndex = 0; childIndex < 
-            graph.get(i).size(); childIndex++) {
-           if(!finishPrerequisite(vertices, graph, graph.get(i).get(childIndex)))
+        for(int childIndex = 0; childIndex < neighbours.size(); childIndex++) {
+           if(!finishPrerequisite(vertices, graph, neighbours.get(childIndex)))
                return false;
         }
         
