@@ -31,16 +31,16 @@ class Solution {
 // DP - Top Down Time O(n) Space O(n)
 class Solution {
     public int climbStairs(int n) {
-        return calculateSteps(n);
+        if(n == 0) return 0;
+        return countStairs(n);
     }
     
-    public int calculateSteps(int n) {
-       int[] count = new int[n+1];
-       count[0] = 1; count[1] = 1;
-       for(int i = 2; i<= n; i++) {
-           count[i] = count[i-1] + count[i-2];
-       }    
-        return count[n];
+    public int countStairs(int n) {
+        int[] count = new int[n+1];
+        count[0] = 1; count[1] = 1;
+        for(int i = 2; i <= n; i++) {
+            count[i] = count[i - 1] + count[i - 2];
+        }
+        return count[n]; 
     }
 }
-
