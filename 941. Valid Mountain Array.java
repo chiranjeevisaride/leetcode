@@ -1,18 +1,23 @@
 class Solution {
     public boolean validMountainArray(int[] A) {
         if(A == null || A.length < 3) return false;
-        int i = 0;
-        while(i + 1 < A.length - 1 && A[i] < A[i+1]) {
-            i++;
+        int index = 0;
+        
+        // upward slope
+        while(index < A.length && index + 1 < A.length && A[index] < A[index + 1]) {
+            index++;
         }
         
-        if(i == 0 || i+1 >= A.length) return false;
+        //At peak now - check not mountain conditions
+        // i == 0 only downward slope or index + 1 >= A.length flattened curve
+        if(index == 0 || index + 1 >= A.length)
+            return false;
         
-        while(i + 1 < A.length && A[i] > A[i+1]) {
-            i++;
+        // Downward slope
+        while(index < A.length && index + 1 < A.length ) {
+            if(A[index] <= A[index+1]) return false;
+            index++;
         }
-        
-        if(A[i-1] <= A[i] || i != A.length -1) return false;
         
         return true;
     }
