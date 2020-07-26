@@ -1,4 +1,4 @@
-package DataStructures;
+package Graph;
 // BST Deletion Iterative 
 
 class Node {

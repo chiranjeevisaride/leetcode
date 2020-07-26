@@ -20,7 +20,7 @@ class Solution {
     public int rob(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
         int dp[] = new int[nums.length];
-        Arrays.fill(dp, Integer.MAX_VALUE);
+        Arrays.fill(dp, -1);
         return getMaxAmount(nums, nums.length - 1, dp);
     }
     
@@ -29,7 +29,7 @@ class Solution {
        if(n < 0) return 0; 
        if(n == 0) return nums[0];
        if(n == 1) return Integer.max(nums[1], nums[0]);
-       if(dp[n] != Integer.MAX_VALUE) return dp[n]; 
+       if(dp[n] != -1) return dp[n]; 
        dp[n] = Integer.max(nums[n] + getMaxAmount(nums, n-2, dp), getMaxAmount(nums, n-1, dp));
        return dp[n]; 
     }
@@ -53,5 +53,25 @@ class Solution {
             dp[i] = Integer.max(nums[i] + dp[i-2], dp[i-1]);
        }
        return dp[nums.length-1]; 
+    }
+}
+
+// Optimised DP 
+// Time O(n)
+// Space O(1)
+class Solution {
+    public int rob(int[] nums) {
+        if(nums == null || nums.length == 0) return 0;
+        if(nums.length == 1) return nums[0];
+        return getMaxAmount(nums);
+    }
+    
+     public int getMaxAmount(int[] nums) { 
+        nums[1] = Math.max(nums[1], nums[0]);
+        for(int i = 2; i < nums.length; i++) {
+            nums[i] = Math.max(nums[i] + nums[i-2], nums[i-1]);
+           System.out.println(nums[i]); 
+        }  
+         return nums[nums.length-1]; 
     }
 }

@@ -1,4 +1,4 @@
-package DataStructures;
+package Graph;
 
 import java.util.*;
 
