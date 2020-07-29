@@ -1,3 +1,4 @@
+// // DP - Kadens Algo 
 class Solution {
     public int maxSubArray(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
@@ -9,3 +10,18 @@ class Solution {
          return global_max;
     }
 }
+
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+      if(nums == null || nums.length == 0) return 0;  
+      int max_sum = nums[0];
+       for(int i = 1; i < nums.length; i++) {
+          if(nums[i - 1] > 0) nums[i] += nums[i - 1];
+          max_sum = Math.max(max_sum, nums[i]);
+       } 
+        return max_sum;
+    }
+}
+  
+  

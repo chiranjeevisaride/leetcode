@@ -2,6 +2,11 @@ package Graphs;
 import java.io.*;
 import java.util.*;
 
+// Shortest Path from Single Source
+// Works for both directed and undirected graphs
+// Time O(V62)
+// Space O(V+E)
+
 class DijstrasShortestPath {
   
      public static void printSolution(int dist[], int V){ 
