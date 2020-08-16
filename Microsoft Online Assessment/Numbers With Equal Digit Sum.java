@@ -1,35 +1,33 @@
-import java.util.*;
-// Time - O(nlogn)  logn to cal sum if digits, Space - O(n)
-class Main {
-  public static void main(String[] args) {
-    Main m = new Main();
-    int[] A = new int[]{51, 71, 17,42};
-    System.out.println(m.numberWithEqualDigits(A));
-  }
-
-  public int numberWithEqualDigits(int[] A){
-    int result = -1;
-    Map<Integer, Integer> hMap = new HashMap<Integer, Integer>();
-    for(int i=0; i< A.length; i++){
-      int sum = findSumFromDigit(A[i]);
-      if(hMap.containsKey(sum)){
-          hMap.put(sum, hMap.get(sum) + A[i]);
-          if(result == -1 || hMap.get(sum) > result)
-              result = hMap.get(sum);
-      }
-       else
-         hMap.put(sum, A[i]);   
+class Solution {
+  
+  public static int findMaxSum(int[] nums) {
+    int max_sum = -1;
+    Map<Integer ,Integer>  map = new HashMap<Integer, Integer>();
+    int len = nums.length;
+    for(int i = 0; i < nums.length; i++) {
+         int sum = getSum(nums[i]); 
+         if(map.containsKey(sum)) {
+            int value = map.get(sum); 
+           if(value + nums[i] > max_sum) max_sum = value + nums[i];
+           map.put(sum, value > nums[i] ? value : nums[i]);
+         }  
+          else {
+            map.put(sum, nums[i]); 
+          }  
     }
-    return result;
-  }
-
-  public int findSumFromDigit(int digit){
+    return max_sum;
+  }  
+  
+  public static int getSum(int num) {
     int sum = 0;
-    digit = Math.abs(digit);
-    while(digit !=0){
-      sum += (digit%10);
-      digit = digit/10;
-    }
-    return sum;
+    while(num > 0) {
+      sum += num%10;
+      num = num/10;
+    }   
+     return sum;
+  }  
+  
+  public static void main(String[] args) {
+     System.out.println(findMaxSum(new int[] {51, 32, 43}));
   }
 }

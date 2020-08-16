@@ -93,3 +93,52 @@ public class Solution {
         }
     }
 }
+
+
+/*
+BFS Time - O(M * N )
+SPace - O(min(M,N))
+*/
+
+class Solution {
+    static int[][] directions = new int[][]{{-1,0},{1, 0}, {0, 1}, {0, -1}};
+    public int numIslands(char[][] grid) {
+        if(grid == null || grid.length == 0) return 0;
+        int counter = 0;
+        int rows = grid.length, cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        for(int row = 0; row < rows; row++) {
+          for(int col = 0; col < cols; col++) {
+            if(grid[row][col] == '1' && !visited[row][col]) {
+              counter++;
+              findNeighbours(grid, visited, row, col);
+            }  
+          }  
+        } 
+        return counter;
+    }
+    
+    
+ public void findNeighbours(char[][] grid, boolean[][] visited, int row, int col) {
+    Queue<int[]> queue = new LinkedList<>();
+    queue.add(new int[]{row, col});
+    visited[row][col] = true;
+    while(!queue.isEmpty()) {
+        int[] current = queue.poll();
+        for(int[] direction : directions) {
+          int new_row = current[0] + direction[0];
+          int new_col = current[1] + direction[1];
+          if(check(grid, new_row, new_col) && !visited[new_row][new_col]) {
+             visited[new_row][new_col] = true;
+             queue.add(new int[]{new_row, new_col});
+          }  
+        }  
+    }   
+  } 
+    
+  public boolean check(char[][] grid, int row, int col) {
+    if(row < 0 || col < 0 || row >= grid.length || col >= grid[0].length
+       || grid[row][col] == '0') return false;
+    return true;
+  }     
+}
