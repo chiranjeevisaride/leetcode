@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  Time = O(n)
  Space (1)
 
-DP - top down 
+DP - Bottom Up
 
 */
 
@@ -43,4 +43,25 @@ class Solution {
      System.out.println(s.particleVelocity(new int[]{-1, 1, 3, 3, 3, 2, 3, 2, 1, 0}));
   }
   
+}
+
+// Top - Down
+// Time - O(n) Space - O(1)
+public class Solution {
+  int sum = 0;
+  public int numberOfArithmeticSlices(int[] A) {
+      slices(A, A.length - 1);
+      return sum;
+  }
+  public int slices(int[] A, int i) {
+      if (i < 2)
+          return 0;
+      int ap = 0;
+      if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
+          ap = 1 + slices(A, i - 1);
+          sum += ap;
+      } else
+          slices(A, i - 1);
+      return ap;
+  }
 }
