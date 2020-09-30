@@ -7,16 +7,16 @@ class Solution {
     }
 
     private static boolean subsetSum(int[] arr, int sum) {
-      return isSubsetSum(arr, arr.length, sum);
+      return isSubsetSum(arr, arr.length-1, sum);
     }  
   
   
    private static boolean isSubsetSum(int[] arr, int n, int sum) {
       if(sum == 0) return true;
-      else if(n == 0) return false;
-      else if(arr[n-1] > sum) return isSubsetSum(arr, n-1, sum);
+      else if(n < 0) return false;
+      else if(arr[n] > sum) return isSubsetSum(arr, n-1, sum);
       else
-        return isSubsetSum(arr, n-1, sum - arr[n-1]) || isSubsetSum(arr, n-1, sum);
+        return isSubsetSum(arr, n-1, sum - arr[n]) || isSubsetSum(arr, n-1, sum);
    }  
    
 }
