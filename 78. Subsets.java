@@ -1,22 +1,17 @@
 // Approach 1 Cascading Time & SPace O(N*2^N)
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-      List<List<Integer>> output = new ArrayList();
-      output.add(new ArrayList<Integer>());
-  
-      for(int num : nums) {
-          List<List<Integer>> newSubsets = new ArrayList<>(); 
-          for(List<Integer> cur : output) {
-              List<Integer> current = new ArrayList<Integer>(cur);
-              current.add(num);
-              newSubsets.add(new ArrayList<Integer>(current));
-          }
-          for(List<Integer> curr : newSubsets) {
-              output.add(curr);
-          }
-      }
-        
-      return output;
+        List<List<Integer>> subsets = new ArrayList<>();
+        subsets.add(new ArrayList<>());
+        for(int num : nums) {
+          int n = subsets.size();
+          for(int index = 0; index < n; index++) {
+             List<Integer> current = new ArrayList<>(subsets.get(index));
+             current.add(num);
+             subsets.add(current);
+          }  
+        }  
+        return subsets;
     }
   }
 
