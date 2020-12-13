@@ -52,3 +52,39 @@ class Solution {
         return Arrays.copyOf(intervals, index+1);
     }
 }
+
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+         if(intervals.length < 2) 
+          return intervals;
+
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+
+        List<int[]> list = new LinkedList<>();
+
+        for(int index = 1; index < intervals.length; index++) {
+          int[] interval = intervals[index];
+          if(end >= interval[0]) {
+            end = Integer.max(interval[1], end); 
+          } else {
+             list.add(new int[]{start, end});
+             start = interval[0];
+             end = interval[1];
+          } 
+        }  
+        
+        list.add(new int[]{start, end});
+
+        int[][] result = new int[list.size()][2];
+        int index = 0;
+        for(int[] interval : list) {
+          result[index++] = interval; 
+        }  
+
+        return result;
+    }
+}
