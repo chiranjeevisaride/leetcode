@@ -10,30 +10,30 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        if(m == n) return head;
-        ListNode current = head, previous = null;
+        if(head == null || m >= n) return head;
+        ListNode previous = null, current = head;
         for(int index = 0; index < m - 1; index++) {
             previous = current;
             current = current.next;
         }
-        if(previous != null)
-            previous.next = reverseList(current, m, n);
-        else
-           head = reverseList(current, m, n); 
-        return head;
+         if(previous != null) {
+              previous.next = reverseList(current, n - m + 1);
+              return head; 
+         }  
+         else
+             return reverseList(head, n - m + 1);  
     }
     
-    private ListNode reverseList(ListNode current, int m, int n) {
-        ListNode previous = null, next = null, lastNode = current;
-        int counter = 0;
-        while(current != null && counter != (n - m + 1)) {
-            next = current.next;
-            current.next = previous;
-            previous = current;
-            current = next;
-            counter +=1;
+    private ListNode reverseList(ListNode head, int n) {
+        ListNode prev = null, current = head;
+        while(current != null && n > 0) {   
+            ListNode temp = current.next;
+            current.next = prev;
+            prev = current;
+            current = temp; 
+            --n;
         }
-        lastNode.next = current;
-        return previous;
+        head.next = current;
+       return prev;
     }
 }
