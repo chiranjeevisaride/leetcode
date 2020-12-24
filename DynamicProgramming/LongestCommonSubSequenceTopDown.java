@@ -1,34 +1,31 @@
-package DynamicProgramming;
 
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
-public class LongestCommonSubSequenceTopDown {
-    public static void main(String[] args) {
-        LongestCommonSubSequenceTopDown lcs = new LongestCommonSubSequenceTopDown();
-        String s1 = "abcdgh";
-        String s2 = "abedfhr";
-        char[] X = s1.toCharArray(); 
-        char[] Y = s2.toCharArray(); 
-        System.out.println(lcs.LCS(X,Y, X.length, Y.length));
-    }   
 
-    int LCS(char[] X, char[] Y, int n , int m){
-        int[][] L = new int[n+1][m+1];
-        for(int i=0; i<= n; i++){
-            for(int j=0; j<=m; j++){
-                if (i == 0 || j == 0) L[i][j] = 0; 
-                 else if (X[i-1] == Y[j-1]) 
-                    L[i][j] = L[i-1][j-1] + 1; 
-                else
-                    L[i][j] = max(L[i-1][j], L[i][j-1]); 
-            }
-        }
-            return L[n][m];
-    }
+class Solution {
 
-    int max(int a, int b){
-        return  a > b ? a: b;
-    }
+  public int findLCS(String s1, String s2) {
+    int[][] dp = new int[s1.length()+1][s2.length()+1];
+    int maxLen = 0;
+    
+    for(int i = 1; i <= s1.length(); i++) {
+      for(int j = 1; j <= s2.length(); j++) {
+        if(s1.charAt(i-1) == s2.charAt(j-1)) 
+            dp[i][j] = 1 + dp[i-1][j-1]; 
+         else
+          dp[i][j] = Math.max(dp[i][j-1], dp[i-1][j]);
+        maxLen = Math.max(maxLen, dp[i][j]);
+      }  
+    } 
+    return maxLen;
+  } 
+  
+  
+  
+  
+  public static void main(String[] args) {
+    Solution s = new Solution();
+    System.out.println(s.findLCS("passport", "ppsspt"));
+  }
 }
-
-

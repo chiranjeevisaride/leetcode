@@ -1,36 +1,34 @@
-package DynamicProgramming;
 
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
-public class LongestCommonSubSequenceMemoization {
-    public static void main(String[] args) {
-        String X = "abcdgh";
-        String Y = "abedfhr";
-        System.out.println(LCSMemo(X,Y, X.length(), Y.length()));
-    }   
+
+class Solution {
+
+  public int findLCS(String s1, String s2) {
+     Integer[][] dp = new Integer[s1.length()][s2.length()];
+     return findLCSRecursive(s1, s2, 0 , 0, dp); 
+  } 
+  
+  
+  private int findLCSRecursive(String s1, String s2, int s1Ptr, int s2Ptr, Integer[][] dp) {
+    if(s1Ptr == s1.length() || s2Ptr == s2.length()) 
+      return 0;
     
-    public static int LCSMemo(String X, String Y, int n , int m) {
-        int[][] LCS = new int[n+1][m+1];
-        Arrays.stream(LCS).forEach(row -> Arrays.fill(row, -1));
-        return LCS(LCS, X, Y, n, m);
-    }
-
-    public static int LCS(int[][] LCS, String X, String Y, int i , int j){
-        if(i ==0 || j==0) return 0;
-        else if (LCS[i][j] != -1) return LCS[i][j];
-        else if(X.charAt(i-1) == Y.charAt(j-1)) {
-            LCS[i][j]  = 1 + LCS(LCS, X, Y , i-1, j-1);
-            return LCS[i][j];
-        } 
-        else {
-            LCS[i][j] = max(LCS(LCS,X, Y , i, j-1), LCS(LCS,X, Y , i-1, j));
-            return LCS[i][j];
-        }
-    }
-
-    public static int max(int a, int b){
-        return  a >= b ? a: b;
-    }
+    if(dp[s1Ptr][s2Ptr] == null) {
+      if(s1.charAt(s1Ptr) == s2.charAt(s2Ptr))
+          dp[s1Ptr][s2Ptr] = 1 + findLCSRecursive(s1, s2, s1Ptr+1, s2Ptr+1, dp);
+      else {
+          int c1 = findLCSRecursive(s1, s2, s1Ptr, s2Ptr+1, dp);
+          int c2 = findLCSRecursive(s1, s2, s1Ptr+1, s2Ptr, dp);
+          dp[s1Ptr][s2Ptr] = Math.max(c1, c2);
+      }  
+    }  
+      return dp[s1Ptr][s2Ptr];
+  }  
+  
+  public static void main(String[] args) {
+    Solution s = new Solution();
+    System.out.println(s.findLCS("passport", "ppsspt"));
+  }
 }
-
-

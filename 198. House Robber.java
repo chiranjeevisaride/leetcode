@@ -75,3 +75,21 @@ class Solution {
          return nums[nums.length-1]; 
     }
 }
+
+
+
+// Time - O(n) space - O(1)
+class Solution {
+    public int rob(int[] nums) {
+        if(nums == null || nums.length == 0)
+            return 0;
+        if(nums.length == 1) return nums[0];
+       int previousTwo = 0, previousOne = 0, max = 0;
+       for(int index = 0; index < nums.length; index++){
+           max = Math.max(previousTwo + nums[index], previousOne);
+           previousTwo = previousOne;
+           previousOne = max;
+       }
+       return max; 
+    }
+}
