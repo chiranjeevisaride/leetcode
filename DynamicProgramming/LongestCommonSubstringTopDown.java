@@ -1,43 +1,29 @@
-package DynamicProgramming;
+
+import java.io.*;
+import java.util.*;
 
 
-public class LongestCommonSubstringTopDown 
-{ 
+class Solution {
 
-	static int LCSubStr(char X[], char Y[], int m, int n) 
-	{ 
-		int LCStuff[][] = new int[m + 1][n + 1]; 
-		int result = 0; // To store length of the longest common substring 
-		
-		// Following steps build LCSuff[m+1][n+1] in bottom up fashion 
-		for (int i = 0; i <= m; i++) 
-		{ 
-			for (int j = 0; j <= n; j++) 
-			{ 
-				if (i == 0 || j == 0) 
-					LCStuff[i][j] = 0; 
-				else if (X[i - 1] == Y[j - 1]) 
-				{ 
-					LCStuff[i][j] = LCStuff[i - 1][j - 1] + 1; 
-					result = Integer.max(result, LCStuff[i][j]); 
-				} 
-				else
-					LCStuff[i][j] = 0; 
-			} 
-		} 
-		return result; 
-	} 
-	
-	// Driver Program to test above function 
-	public static void main(String[] args) 
-	{ 
-		String X = "abdgh"; 
-		String Y = "aedghr"; 
-
-		int m = X.length(); 
-		int n = Y.length(); 
-
-		System.out.println("Length of Longest Common Substring is "
-				+ LCSubStr(X.toCharArray(), Y.toCharArray(), m, n)); 
-	} 
-} 
+  public int lcs(String s1, String s2) {
+    int[][] dp = new int[s1.length() + 1][s2.length() + 1];
+    int maxLen = 0;
+    for(int i = 1; i <= s1.length(); i++) {
+      for(int j = 1; j <= s2.length(); j++) {
+          if(s1.charAt(i-1) == s2.charAt(j-1)) {
+            dp[i][j] = 1 + dp[i-1][j-1];
+            maxLen = Math.max(maxLen, dp[i][j]);
+          } 
+      } 
+    }
+     return maxLen;
+  } 
+  
+  
+  
+  
+  public static void main(String[] args) {
+    Solution s = new Solution();
+    System.out.println(s.lcs("passport", "ppsspt"));
+  }
+}
