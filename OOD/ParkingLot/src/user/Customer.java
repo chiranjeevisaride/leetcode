@@ -1,0 +1,4 @@
+public Customer extends User {
+
+
+}
