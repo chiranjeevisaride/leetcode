@@ -7,7 +7,7 @@ import java.util.*;
   (1 / 2) + (2 / 3)  = 1
   Numerator/ Demoniinator = 1 = ( 1*2 + 3*2 ) / 9
   
-  (X1*Y2 + X2*Y2) / (Y1*Y2)
+  (X1*Y2 + X2*Y1) / (Y1*Y2)
   
  Time - O(n) 
  Space - O(1)
