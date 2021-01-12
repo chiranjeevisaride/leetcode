@@ -1,4 +1,7 @@
-public  interface  User {
-    private Sting name;
-    private final Vehicle vehicle;
+package user;
+
+import vehicle.Vehicle;
+
+public  class User {
+    public String name = null;
 }
