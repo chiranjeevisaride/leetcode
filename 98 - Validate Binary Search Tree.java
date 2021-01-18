@@ -12,13 +12,11 @@ class Solution {
         return isBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
     
-   private boolean isBST(TreeNode root, long min, long max){
-       if(root == null) 
-           return true;
-       if(root.val >= min || root.val <= max) 
-           return false;
-       else
-            return isBST(root.left, min, (long) root.val) &&
-           isBST(root.right, (long) root.val, max);
-   }
+    private boolean isBST(TreeNode node, long min ,long max) {
+        if(node == null) return true;
+        if(node.val <= min || node.val >= max) 
+                return false;
+          return isBST(node.left, min, (long) node.val) && 
+            isBST(node.right, (long) node.val, max);  
+    } 
 }
