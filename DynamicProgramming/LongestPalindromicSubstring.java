@@ -1,30 +1,25 @@
-package DynamicProgramming;
-public class LongestPalindromicSubstring {
-    public static void main(String[] args) {
-        String X = "abcd";
-        String Y = new StringBuffer(X).reverse().toString();
-        System.out.println(lcs(X, Y, X.length(), Y.length(), ""));
-
-    }
-
-    
-    public static String lcs(String X, String Y, int i, int j, String result) { 
-        if (i == 0 || j == 0) 
-            return result;
-        else if (X.charAt(i - 1) == Y.charAt(j - 1)) 
-            result = lcs(X, Y, i - 1, j - 1, X.charAt(i - 1) + result); 
-        else 
-        result = longestStr(result, longestStr(lcs(X, Y, i, j - 1, ""), lcs(X, Y, i - 1, j, ""))); 
-        return result; 
-    } 
-
-
-    public static String longestStr(String string1, String string2) {
-        if(!string1.isEmpty() && !string2.isEmpty())
-            return string1.length() >= string2.length() ? string1 : string2;
-        else if(string1.isEmpty()) return string2;  
-        else return string1;    
-    }
-    
+class Solution {
+  
+  private static int lps(String str) {
+    return lpsRec(str, 0, str.length()-1);
+  }
+  
+  private static int lpsRec(String str, int startPtr, int endPtr) {
+    if(startPtr > endPtr) return 0;
+    if(startPtr == endPtr) return 1;
+    else if(str.charAt(startPtr) == str.charAt(endPtr)) {
+      int remainingStr = endPtr - startPtr - 1;
+      if(remainingStr == lpsRec(str, startPtr + 1, endPtr - 1))
+        return remainingStr + 2;
+    }  
+      int c1 = lpsRec(str, startPtr + 1, endPtr);
+      int c2 = lpsRec(str, startPtr, endPtr - 1);
+    return Math.max(c1,c2);
+  }
+  
+  public static void main(String[] args) {
+     System.out.println(lps("abdbca"));
+     System.out.println(lps("aaaabbaa"));
+  }
+  
 }
-
