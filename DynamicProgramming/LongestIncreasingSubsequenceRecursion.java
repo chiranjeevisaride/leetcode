@@ -17,7 +17,6 @@ class Solution {
       
     }  
     
-    
     public static void main(String[] args) {
        System.out.println(lis(new int[]{4,2,5,6,10,1,12}));
        System.out.println(lis(new int[]{-4,10,3,7,15}));
