@@ -1,3 +1,4 @@
+// Time - O(N*2N) Space - O(N*2N)
 class Solution {
     public List<String> letterCasePermutation(String S) {
         List<String> result = new ArrayList<>();
@@ -19,6 +20,28 @@ class Solution {
                     generatePermutations(i+1, String.valueOf(wordArr), result);
                 }
             } 
+        }
+    }
+}
+
+
+class Solution {
+    public List<String> letterCasePermutation(String s) {
+        List<String> result = new ArrayList<>();
+        if(s == null || s.length() == 0) return result;
+        dfs(s, result, 0);
+        return result;
+    }
+    
+    private void dfs(String s, List<String> result, int curIndx) {
+        result.add(new String(s));
+        for(int index = curIndx; index < s.length(); index++) {
+            char[] c = s.toCharArray();
+            if(Character.isLetter(c[index])) {
+                c[index] = Character.isLowerCase(c[index]) ? 
+                    Character.toUpperCase(c[index]) : Character.toLowerCase(c[index]);
+                 dfs(new String(c), result, index + 1);
+            }
         }
     }
 }
