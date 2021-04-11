@@ -7,6 +7,11 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+/*
+Complexity Analysis
+Time complexity : O(N) since each node is processed exactly once.
+Space complexity : O(N) to keep the output structure which contains N node values.
+*/
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> res = new ArrayList<>();
