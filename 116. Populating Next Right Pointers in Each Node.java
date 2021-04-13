@@ -30,8 +30,7 @@ class Solution {
             int size = queue.size();
             for(int indx = 0; indx < size; indx++) {
                 Node current = queue.poll();
-                if(size - 1 == indx) current.next = null;
-                else
+                if(indx < size - 1) 
                   current.next = queue.peek();
                 if(current.left != null)
                     queue.add(current.left);
