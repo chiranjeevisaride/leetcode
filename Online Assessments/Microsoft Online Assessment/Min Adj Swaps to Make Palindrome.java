@@ -138,3 +138,89 @@ class Solution {
   }
   
 }
+
+
+//2nd Method 
+
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
+
+
+/*
+
+Given a sorted array, create a new array containing squares of all the numbers of the input array in the sorted order.
+
+
+
+*/
+
+class Solution {
+  
+  
+  public static int minSwapsToPalindrome(String s) {
+    if(s == null || s.length() == 0) return -1;
+    char[] arr = s.toCharArray();
+    int minSwaps = 0, left = 0, right = s.length() - 1;
+    while(left < right) {
+      if(arr[left] == arr[right]) {
+        left++; right--;
+      } else {
+        int rightMatch = findMatch(left, right, arr, true);
+        if(rightMatch != -1) {
+          minSwaps += (right - rightMatch); 
+          swaps(arr,rightMatch, right, true);
+          continue;
+        }
+       int leftMatch = findMatch( left, right, arr, false);
+        if(leftMatch != -1) {
+          minSwaps += (leftMatch - left); 
+          swaps(arr,leftMatch, left, false);
+          continue;
+        }
+        return -1;
+      }  
+    }
+    return minSwaps;
+  }
+  
+  private static void swaps(char[] arr, int src, int dest, boolean rightToLeft) {
+    if(rightToLeft) {
+        while(src < dest) {
+        char temp = arr[src+1];
+        arr[src+1] = arr[src];
+        arr[src++] = temp;
+      }
+    } else {
+        while(src > dest) {
+        char temp = arr[src-1];
+        arr[src-1] = arr[src];
+        arr[src--] = temp;
+      }
+    }   
+  }  
+  
+  private static int findMatch(int srcIndx, int indx, char[] arr, boolean rightToLeft) {
+    if(rightToLeft) {
+        while(srcIndx < indx) {
+          if(arr[srcIndx] == arr[indx])
+            return indx;
+          indx--;
+        }
+    } else {
+      while(srcIndx < indx) {
+          if(arr[srcIndx] == arr[indx])
+            return srcIndx;
+          srcIndx++;
+        }
+    }  
+    return -1;
+  }  
+  
+  public static void main(String[] args) {
+    System.out.println(minSwapsToPalindrome("mamad"));
+    System.out.println(minSwapsToPalindrome("asflkj"));
+    System.out.println(minSwapsToPalindrome("aabb"));
+    System.out.println(minSwapsToPalindrome("ntiin"));
+  }
+}
