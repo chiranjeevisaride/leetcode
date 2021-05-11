@@ -93,3 +93,29 @@ class Solution {
        return max; 
     }
 }
+
+
+class Solution {
+  
+    public static void main(String[] args) {
+      System.out.println(rob(new int[]{2,7,9,3,1}));
+    }
+    
+    
+    public static int rob(int[] nums) {
+          if(nums == null || nums.length < 1) return 0;
+          if(nums.length == 1) return nums[0];
+          int[] temp = new int[nums.length];
+          int maxProfit = Math.max(nums[0], nums[1]);
+          temp[0] = nums[0]; temp[1] = maxProfit;
+          for(int index = 2; index < nums.length; index++) {
+              int tempProfit = Math.max(nums[index] + temp[index-2], temp[index-1]);
+              if(tempProfit > maxProfit) {
+                  maxProfit = tempProfit;
+              }
+              temp[index] = maxProfit;
+          }
+          return maxProfit;
+    }
+  }
+  
