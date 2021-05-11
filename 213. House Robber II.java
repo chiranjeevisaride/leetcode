@@ -1,5 +1,11 @@
+
 class Solution {
-    public int rob(int[] nums) {
+  
+    public static void main(String[] args) {
+      System.out.println(rob(new int[]{2,7,9,3,1}));
+    }
+  
+    public static int rob(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
         if(nums.length == 1) return nums[0];
         if(nums.length == 2) return Math.max(nums[0], nums[1]);
@@ -8,7 +14,7 @@ class Solution {
         return Math.max(maxProfit1, maxProfit2);
     }
     
-     public static int rob(int[] nums, int start, int len) {
+   public static int rob(int[] nums, int start, int len) {
         int[] temp = new int[nums.length];
         int maxProfit = Math.max(nums[start], nums[start + 1]);
         temp[start] = nums[start]; temp[start + 1] = maxProfit;
@@ -20,6 +26,6 @@ class Solution {
             temp[index] = maxProfit;
         }
         return maxProfit;
-  }
+    }  
     
 }
