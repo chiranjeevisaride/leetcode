@@ -60,3 +60,44 @@ class Solution {
         return true;
     }
 }
+
+
+// Without Stack using Recursion/backtracking 
+
+class Solution {
+    
+    private char[][] board;
+    private String word;
+    private static int[][] directions = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+    
+    public boolean exist(char[][] board, String word) {
+        this.board = board;
+        this.word = word;
+        int rows = board.length, cols = board[0].length;
+        for(int row = 0; row < rows; row++) {
+            for(int col = 0; col < cols; col++) {
+                if(isWordExist(row, col, 0))
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isWordExist(int row, int col, int index) {
+        if(index >= word.length()) return true;
+        
+        if(row < 0 || row >= board.length || col < 0 || col >= board[row].length ||
+           board[row][col] != word.charAt(index) || board[row][col] == '#')
+            return false;
+        
+        board[row][col] = '#';
+    
+        for(int[] direction : directions) {
+            if(isWordExist(row + direction[0], col + direction[1], index+1))
+                return true;
+        }
+        
+        board[row][col] = word.charAt(index);
+        return false;
+    }
+}
