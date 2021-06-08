@@ -66,3 +66,53 @@ class Solution {
         stack.push(course);
     }
 }
+
+//2nd method
+
+class Solution {
+    private Map<Integer, List<Integer>> map = new HashMap<>();
+    private static int UNVISITED = 0, VISITING = 1, FINISH_VISITING = 2;
+    private boolean hasCycle = false;
+    
+    public int[] findOrder(int numCourses, int[][] prerequisites) {    
+        for(int vertex = 0; vertex < numCourses; vertex++)
+            map.putIfAbsent(vertex, new ArrayList<>());
+        
+        for(int[] prerequisit : prerequisites) {
+            List<Integer> neighbours = map.getOrDefault(prerequisit[1], new ArrayList<>());
+            neighbours.add(prerequisit[0]);
+            map.put(prerequisit[1], neighbours);
+        }
+        
+        Stack<Integer> stack = new Stack<>();
+        int[] visited = new int[numCourses];
+        
+        for(int vertex = 0; vertex < numCourses; vertex++) {
+            if(visited[vertex] == UNVISITED) {
+                sortUtil(vertex, visited, stack);
+            }
+            if(hasCycle) return new int[]{};
+        }
+        int[] result = new int[stack.size()];
+        int index = 0;
+        while(!stack.isEmpty()) {
+            result[index++] = stack.pop();
+        }
+        return result;
+    }
+    
+    private void sortUtil(int current, int[] visited, Stack<Integer> stack) {
+        if(visited[current] == FINISH_VISITING) return;
+        if(visited[current] == VISITING)  {
+            hasCycle = true;
+            return;
+        }
+        visited[current] = VISITING;  
+        for(int vertex : map.getOrDefault(current, new ArrayList<>())) {
+            if(visited[vertex] == FINISH_VISITING) continue;
+            sortUtil(vertex, visited, stack);
+        }
+        visited[current] = FINISH_VISITING;
+        stack.push(current);
+    }
+}
