@@ -1,144 +1,173 @@
 import java.io.*;
 import java.util.*;
 
- 
+
 class ListNode<T> {
-  T val;
+  T value;
   ListNode<T> prev, next;
-  ListNode(T val) {
-    this.val = val;
+  ListNode(T value) {
+    this.value = value;
     this.prev = this.next = null;
   }  
-}  
+} 
 
+class DoublyLinkedList<T> {
 
-class DoublyLikedList<T> {
-  
-  ListNode<T> head, tail;
   int size;
-  
-  DoublyLikedList() {
-    head = tail = null;
-    size = 0;
-  }
-  
-   // Time O(1)
-  public boolean addFirst(T val) {
-    ListNode<T> newNode = new ListNode<T>(val);
-    if(size == 0) {
+  ListNode<T> head, tail;
+
+  DoublyLinkedList() {
+    this.size = 0;
+    this.head = tail = null;
+  }  
+
+  public int size() {
+    return this.size;
+  }  
+
+  public boolean isEmpty() {
+    return this.size == 0 ? true : false;
+  }  
+
+  // Time - O(1)
+  public void addFirst(T value) {
+    ListNode<T> newNode = new ListNode<T>(value);
+    if(isEmpty()) {
       head = tail = newNode;
     } else {
        newNode.next = head;
-       newNode.prev = head;
        head = newNode;
+       newNode.prev = head;
     }  
-    ++size;
-    return true;
+    ++size;  
   }  
-  
-   // Time O(1)
-  public boolean addLast(T val) {
-    if(size == 0)
-      addFirst(val);
+
+  // Time - O(1)
+  public void addLast(T value) {
+     ListNode<T> newNode = new ListNode<T>(value);
+     if(isEmpty()) {
+        addFirst(value);   
+     } else {
+       tail.next = newNode;
+       newNode.prev = tail;
+       tail = newNode;
+       ++size; 
+     }  
+  }  
+
+   // Time - O(1)
+  public void add(T value) {
+      addLast(value);
+  }  
+
+
+ // Time - O(n)
+  public void add(T value, int pos) {
+    if(pos == 0) addFirst(value);
+    else if(pos == size() - 1) addLast(value);
     else {
-      ListNode<T> newNode = new ListNode<T>(val);
-      tail.next = newNode;
-      newNode.prev = tail;
-      tail = newNode;
-      ++size; 
-    }
-    return true;
-  }  
-  
-   // Time O(n)
-  public boolean add(T val, int index) {
-    if(index < 0 || index > size) {
-       System.out.println("Invalid index"); 
-       return false;
-    } else if(index == 0)
-      addFirst(val);
-      else if(index == size)
-       addLast(val);
-      else {
-         ListNode<T> newNode = new ListNode<T>(val);
-         ListNode<T> current = head;
-         for(int pos = 0; pos < index - 1; pos++) {
-            current = current.next;
-         }
-         newNode.next = current.next;
-         current.next.prev = newNode;
-         current.next = newNode;
-         newNode.prev = current;
-         ++size;
+      ListNode<T> currentNode = head;
+      ListNode<T> newNode = new ListNode<T>(value);
+      for(int index = 0; index < pos - 1; index++) {
+          currentNode = currentNode.next;
       } 
-    return true;
+      newNode.prev = currentNode;
+      newNode.next = currentNode.next;
+      currentNode.next.prev = newNode;
+      currentNode.next = newNode;
+      ++size;
+    }     
   }  
-  
-  // Time O(1)
+
+  // Time - O(1)
+  public ListNode<T> remove() {
+    return removeLast();
+  }  
+
+  // Time - O(1)
   public ListNode<T> removeFirst() {
-      ListNode<T> deletedNode = null;
-      if(size == 0) 
-        return deletedNode;
-      else if(size == 1) {
-       deletedNode = head; 
-       head = tail = null;
-       size = 0; 
-      } else {
-        deletedNode = head; 
+     ListNode<T> deletedNode = head;
+     if(!isEmpty()) {
         head = head.next;
-        deletedNode.next.prev = null;
+        head.prev = null;
         deletedNode.next = null;
-       --size;
-      }      
-      return deletedNode; 
-  }  
-  
-  
-  // Time O(1)
-  public ListNode<T> removeLast() {
-     ListNode<T> deletedNode = null;
-     if(size == 0)
-       return deletedNode;
-     else if(size == 1)
-       return removeFirst();
-     else {
-          deletedNode = tail;
-          tail = tail.prev;
-          deletedNode.prev = null;
-          tail.next = null;
-          --size;
-     }
+     }  
+     --size;
      return deletedNode;
   }  
-  
-  public void display() {
-    if(size == 0) {
-      System.out.println("List is Empty"); 
-      return;
-    }  
-    ListNode<T> current = head;
-    for(int index = 0; index < size; index++) {
-      System.out.print(current.val + "->");
-      current = current.next;
-    }
-     System.out.println();
+
+  // Time - O(1)
+  public ListNode<T> removeLast() {
+     ListNode<T> deletedNode = tail;
+     if(!isEmpty()) {
+        tail = tail.prev;
+        tail.next = null;
+        deletedNode.prev = null;
+     } 
+     --size;
+     return deletedNode;
+  }
+
+ // Time - O(n)
+  public ListNode<T> remove(int pos) {
+    ListNode<T> deletedNode = null;
+    if(pos == 0)
+     return removeFirst();
+    else if(pos == size() - 1)
+     return removeLast();
+    else {
+      ListNode<T> currentNode = head;
+      for(int index = 0; index < pos - 1; index++) {
+          currentNode = currentNode.next;
+      } 
+      deletedNode = currentNode.next;
+      deletedNode.next.prev = currentNode;
+      currentNode.next = deletedNode.next;
+      deletedNode.prev = null;
+      deletedNode.next = null;
+      --size;
+    } 
+    return deletedNode; 
   }  
   
+  public ListNode<T> remove(T value, int pos) {
+    ListNode<T> deletedNode = null;
+    return deletedNode;
+  }
+
+  public void display() {
+    if(isEmpty())
+      System.out.println("List is Empty");
+    else {
+      ListNode<T> temp = head;
+      for(int index = 0; index < size(); index++) {
+          System.out.print(temp.value + " <-> ");
+          temp = temp.next;
+      }
+    } 
+     System.out.println(); 
+  }  
+ 
 }  
 
 class Solution {
+
   public static void main(String[] args) {
-    DoublyLikedList<Integer> dll = new DoublyLikedList<Integer>();
-    dll.addFirst(20);
-    dll.addFirst(10);
-    dll.addLast(40);
-    dll.addLast(50);
-    dll.add(30, 2);
-    dll.add(35, 3);
-    dll.display();
-    System.out.println("Deleted First: " + dll.removeFirst().val);
-    dll.display();
-    System.out.println("Deleted Last: " + dll.removeLast().val);
-    dll.display();
+      DoublyLinkedList<Integer> dll = new DoublyLinkedList<>();
+      dll.addFirst(10);
+      dll.addFirst(20);
+      dll.addLast(30);
+      dll.add(40, 1);
+      dll.display();
+      dll.removeFirst();
+      dll.display();
+      dll.removeLast();
+      dll.display();
+      dll.addLast(50);
+      dll.addLast(60);
+      dll.display();
+      dll.remove(1);
+      dll.display();
   }
+
 }
